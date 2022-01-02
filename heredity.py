@@ -163,7 +163,7 @@ def joint_probability(people, one_gene, two_genes, have_trait):
         
         # Calculate probability for having genes specified
         # When person has parents listed:
-        if people[person]["mother"]: # Either both parents exit or none
+        if people[person]["mother"]: # Either both parents exist or none
             if scenario[people[person]["mother"]]["gene"] == 0:
                 mother_probability = PROBS["mutation"]
             elif scenario[people[person]["mother"]]["gene"] == 1:
@@ -225,8 +225,27 @@ def normalize(probabilities):
     Update `probabilities` such that each probability distribution
     is normalized (i.e., sums to 1, with relative proportions the same).
     """
-    raise NotImplementedError
+    for person in probabilities:
+        gene_sum = 0
+        gene_sum += probabilities[person]["gene"][1]
+        gene_sum += probabilities[person]["gene"][2]
+        gene_sum += probabilities[person]["gene"][0]
 
+        probabilities[person]["gene"][1] = (probabilities[person]["gene"][1] /
+            gene_sum)
+        probabilities[person]["gene"][2] = (probabilities[person]["gene"][2] /
+            gene_sum
+        probabilities[person]["gene"][0] = (probabilities[person]["gene"][0] /
+            gene_sum)
+
+        trait_sum = 0
+        trait_sum += probabilities[person]["trait"][True]
+        trait_sum += probabilities[person]["trait"][False]
+
+        probabilities[person]["trait"][True] = (probabilities[person]["trait"][True] /
+            trait_sum)
+        probabilities[person]["trait"][False] = (probabilities[person]["trait"][False] /
+            trait_sum)
 
 if __name__ == "__main__":
     main()
