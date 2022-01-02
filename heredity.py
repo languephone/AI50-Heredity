@@ -139,8 +139,64 @@ def joint_probability(people, one_gene, two_genes, have_trait):
         * everyone in set `have_trait` has the trait, and
         * everyone not in set` have_trait` does not have the trait.
     """
-    raise NotImplementedError
+    scenario_probability = 1
 
+    # Create dictionary of scenario
+    scenario = {
+        person: {
+            "gene": 0,
+            "trait": False
+        }
+        for person in people
+    }
+    
+    for name in list(one_gene):
+        scenario[name]["gene"] = 1
+    for name in two_genes:
+        scenario[name]["gene"] = 2
+    for name in have_trait:
+        scenario[name]["trait"] = True
+
+    print(scenario)
+
+    for person in people:
+        
+        # Calculate probability for having genes specified
+        # When person has parents listed:
+        if people[person]["mother"]:
+            if scenario[people[person]["mother"]]["gene"] == 0:
+                mother_probability = PROBS["mutation"]
+            elif scenario[people[person]["mother"]]["gene"] == 1:
+                mother_probability = 0.5
+            elif scenario[people[person]["mother"]]["gene"] == 2:
+                mother_probability = 1 - PROBS["mutation"]
+
+            if scenario[people[person]["father"]]["gene"] == 0:
+                father_probability = PROBS["mutation"]
+            elif scenario[people[person]["father"]]["gene"] == 1:
+                father_probability = 0.5
+            elif scenario[people[person]["father"]]["gene"] == 2:
+                father_probability = 1 - PROBS["mutation"]
+
+            gene_probability = mother_probability + father_probability
+
+        # When person has no parents listed
+        else:
+            gene_probability = PROBS["gene"][scenario[person]["gene"]]
+
+        # Calculate probability for having trait specified
+        trait_probability = PROBS["trait"][scenario[person]["gene"]][scenario[person]["trait"]]
+
+        # Combine gene and trait probability
+        person_probability = gene_probability * trait_probability        
+
+        print(f"{person}: {person_probability}")
+
+        # Combine current person probability with existing scenario
+        scenario_probability *= person_probability
+
+    print(f"Scenario probability: {scenario_probability}")
+    return scenario_probability
 
 def update(probabilities, one_gene, two_genes, have_trait, p):
     """
