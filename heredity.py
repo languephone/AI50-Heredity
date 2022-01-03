@@ -158,7 +158,7 @@ def joint_probability(people, one_gene, two_genes, have_trait):
     for name in have_trait:
         scenario[name]["trait"] = True
 
-    print(scenario)
+    # print(scenario)
 
     for person in people:
         
@@ -204,12 +204,12 @@ def joint_probability(people, one_gene, two_genes, have_trait):
         # Combine gene and trait probability
         person_probability = gene_probability * trait_probability        
 
-        print(f"{person}: {person_probability}")
+        # print(f"{person}: {person_probability}")
 
         # Combine current person probability with existing scenario
         scenario_probability *= person_probability
 
-    print(f"Scenario probability: {scenario_probability}")
+    # print(f"Scenario probability: {scenario_probability}")
     return scenario_probability
 
 def update(probabilities, one_gene, two_genes, have_trait, p):
