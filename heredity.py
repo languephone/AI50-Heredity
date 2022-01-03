@@ -179,7 +179,20 @@ def joint_probability(people, one_gene, two_genes, have_trait):
             elif scenario[people[person]["father"]]["gene"] == 2:
                 father_probability = 1 - PROBS["mutation"]
 
-            gene_probability = mother_probability + father_probability
+            if scenario[person]["gene"] == 0:
+                gene_probability = (
+                    (1 - mother_probability) *
+                    (1 - father_probability)
+                    )
+            elif scenario[person]["gene"] == 2:
+                gene_probability = mother_probability * father_probability
+            elif scenario[person]["gene"] == 1:
+                # Occurs when getting one from mother and NOT father
+                # or when getting one from father and NOT mother
+                gene_probability = (
+                    mother_probability * (1 - father_probability) +
+                    father_probability * (1 - mother_probability)
+                    )
 
         # When person has no parents listed
         else:
