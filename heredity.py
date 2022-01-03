@@ -183,7 +183,7 @@ def joint_probability(people, one_gene, two_genes, have_trait):
                 gene_probability = (
                     (1 - mother_probability) *
                     (1 - father_probability)
-                    )
+                )
             elif scenario[person]["gene"] == 2:
                 gene_probability = mother_probability * father_probability
             elif scenario[person]["gene"] == 1:
@@ -192,7 +192,7 @@ def joint_probability(people, one_gene, two_genes, have_trait):
                 gene_probability = (
                     mother_probability * (1 - father_probability) +
                     father_probability * (1 - mother_probability)
-                    )
+                )
 
         # When person has no parents listed
         else:
@@ -211,6 +211,7 @@ def joint_probability(people, one_gene, two_genes, have_trait):
 
     # print(f"Scenario probability: {scenario_probability}")
     return scenario_probability
+
 
 def update(probabilities, one_gene, two_genes, have_trait, p):
     """
@@ -246,20 +247,21 @@ def normalize(probabilities):
         gene_sum += probabilities[person]["gene"][0]
 
         probabilities[person]["gene"][1] = (probabilities[person]["gene"][1] /
-            gene_sum)
+                                            gene_sum)
         probabilities[person]["gene"][2] = (probabilities[person]["gene"][2] /
-            gene_sum)
+                                            gene_sum)
         probabilities[person]["gene"][0] = (probabilities[person]["gene"][0] /
-            gene_sum)
+                                            gene_sum)
 
         trait_sum = 0
         trait_sum += probabilities[person]["trait"][True]
         trait_sum += probabilities[person]["trait"][False]
 
         probabilities[person]["trait"][True] = (probabilities[person]["trait"][True] /
-            trait_sum)
+                                                trait_sum)
         probabilities[person]["trait"][False] = (probabilities[person]["trait"][False] /
-            trait_sum)
+                                                trait_sum)
+
 
 if __name__ == "__main__":
     main()
