@@ -141,7 +141,7 @@ def joint_probability(people, one_gene, two_genes, have_trait):
     """
     scenario_probability = 1
 
-    # Create dictionary of scenario
+    # Create base dictionary of scenario
     scenario = {
         person: {
             "gene": 0,
@@ -150,6 +150,7 @@ def joint_probability(people, one_gene, two_genes, have_trait):
         for person in people
     }
     
+    # Update scenario dictionary based on arguments to function
     for name in list(one_gene):
         scenario[name]["gene"] = 1
     for name in two_genes:
@@ -234,7 +235,7 @@ def normalize(probabilities):
         probabilities[person]["gene"][1] = (probabilities[person]["gene"][1] /
             gene_sum)
         probabilities[person]["gene"][2] = (probabilities[person]["gene"][2] /
-            gene_sum
+            gene_sum)
         probabilities[person]["gene"][0] = (probabilities[person]["gene"][0] /
             gene_sum)
 
