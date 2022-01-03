@@ -164,7 +164,7 @@ def joint_probability(people, one_gene, two_genes, have_trait):
         
         # Calculate probability for having genes specified
         # When person has parents listed:
-        if people[person]["mother"]: # Either both parents exist or none
+        if people[person]["mother"]:  # Either both parents exist or none
             if scenario[people[person]["mother"]]["gene"] == 0:
                 mother_probability = PROBS["mutation"]
             elif scenario[people[person]["mother"]]["gene"] == 1:
